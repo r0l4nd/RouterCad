@@ -1,0 +1,74 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <title>RouterCAD - easy cutting</title>
+    <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/angular_material/0.6.1/angular-material.min.css">
+    <link href="main.css" rel="stylesheet"/>
+
+    <script src="http://code.jquery.com/jquery-2.1.3.js"></script>
+    <script src="http://cdn.jsdelivr.net/hammerjs/2.0.4/hammer.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.6/angular.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.6/angular-animate.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.6/angular-aria.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angular_material/0.6.1/angular-material.min.js"></script>
+    <script src="http://cdn.jsdelivr.net/ace/1.1.8/min/ace.js"></script>
+
+    <script src="ui-ace/ui-ace.js"></script>
+    <script src="DSL/BaseLib.js"></script>
+    <script src="SimpleViewer/csg.js"></script>
+    <script src="SimpleViewer/lightgl.js"></script>
+    <script src="SimpleViewer/BlackShader.js"></script>
+    <script src="SimpleViewer/LightingShader.js"></script>
+    <script src="SimpleViewer/CsgTools.js"></script>
+    <script src="SimpleViewer/SimpleViewer.js"></script>
+    <script src="Components.js"></script>
+    <script src="RouterCadMain.js"></script>
+    </head>
+<body ng-app="routerCadMain">
+
+<div layout="column" ng-controller="mainController" layout-fill>
+    <md-toolbar id="navbar">
+        <div class="md-toolbar-tools">
+            <span>RouterCAD</span>
+            <md-button ng-click="updatePrototype()">Refresh</md-button>
+            <!-- fill up the space between left and right area -->
+            <span flex></span>
+            <md-button>Save</md-button>
+        </div>
+    </md-toolbar>
+
+    <div id="mainContent" layout="row" flex>
+        <div class="container md-whiteframe-z1" id="codeContainer" flex="30">
+            <md-toolbar id="codeBar">
+                <div class="md-toolbar-tools">
+                    <span>Untitled *</span>
+                </div>
+            </md-toolbar>
+            <div id="codeEditor" ui-ace="{
+                            useWrapMode : true,
+                            theme: 'chrome',
+                            mode: 'javascript'
+                         }" ng-model="code"></div>
+            <script type="text/javascript">
+                function resizeEditor() {
+                    $("#codeEditor").height($("#codeContainer").height() - 73);
+                    window.setTimeout(resizeEditor, 100);
+                }
+                $(window).resize(function() {
+                });
+                resizeEditor();
+            </script>
+        </div>
+        <div class="container md-whiteframe-z1" id="previewContainer" flex>
+
+            <viewer model="prototype"></viewer>
+        </div>
+
+    </div>
+</div>
+
+</body>
+
+
+</html>
