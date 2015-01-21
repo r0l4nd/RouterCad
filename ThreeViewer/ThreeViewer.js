@@ -38,7 +38,8 @@ var ThreeViewer;
         };
         Viewer.prototype.init = function () {
             var _this = this;
-            this.camera = new THREE.PerspectiveCamera(70, this.getParentWidth() / this.getParentHeight(), 1, 1000);
+            this.camera = new THREE.PerspectiveCamera(70, this.getParentWidth() / this.getParentHeight(), 1, 10000);
+            this.camera.position.y = -500;
             this.camera.position.z = 500;
             this.controls = new THREE.TrackballControls(this.camera);
             this.controls.rotateSpeed = 1.0;
