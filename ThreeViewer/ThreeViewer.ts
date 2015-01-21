@@ -2,7 +2,7 @@
 /// <reference path="../Scripts/typings/TrackballControls.d.ts" />
 
 module ThreeViewer {
-  export class Viewer  {
+  export class Viewer {
     stats;
 
     camera;
@@ -17,11 +17,20 @@ module ThreeViewer {
       this.animate();
     }
 
+    private getParentWidth() {
+      return this.container.parent().width() - 10;
+    }
+
+    private getParentHeight() {
+      return this.container.parent().innerHeight() - 10;
+    }
+
+
     init() {
 
-      this.camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 1, 1000);
+      this.camera = new THREE.PerspectiveCamera(70, this.getParentWidth() / this.getParentHeight(), 1, 1000);
       this.camera.position.z = 500;
-
+      
       this.controls = new THREE.TrackballControls(this.camera);
 
       this.controls.rotateSpeed = 1.0;
@@ -48,30 +57,28 @@ module ThreeViewer {
 
       // lights
 
-      var light: THREE.Light = new THREE.DirectionalLight(0x00ff00);
-      light.position.set(100, 100, 100);
+      var light = new THREE.PointLight(0xffffff, 1, 2000);
+      light.position.set(200, 200, 500);
       this.scene.add(light);
 
-      light = new THREE.DirectionalLight(0x0000ff);
-      light.position.set(-100, -100, -100);
+      light = new THREE.PointLight(0xffffff, 0.5, 2000);
+      light.position.set(100, 200, 0);
       this.scene.add(light);
-
-      light = new THREE.AmbientLight(0x222222);
-      this.scene.add(light);
-
-
       // renderer
 
       this.renderer = new THREE.WebGLRenderer({ antialias: false });
       this.renderer.setClearColor(0xffffff);
       this.renderer.setPixelRatio(window.devicePixelRatio);
-      this.renderer.setSize(window.innerWidth, window.innerHeight);
+      this.renderer.setSize(this.getParentWidth(), this.getParentHeight());
 
       this.container.append(this.renderer.domElement);
 
       //
 
-      window.addEventListener('resize', this.onWindowResize, false);
+      window.addEventListener('resize', () => {
+        this.onWindowResize();
+        window.setTimeout(() => { this.onWindowResize(); }, 500);
+      }, false);
 
       //
 
@@ -85,16 +92,25 @@ module ThreeViewer {
       this.render();
     }
 
-    onWindowResize() {
+    onWindowResize = () => {
 
-      this.camera.aspect = window.innerWidth / window.innerHeight;
+      this.camera.aspect = this.getParentWidth() / this.getParentHeight();
       this.camera.updateProjectionMatrix();
 
-      this.renderer.setSize(window.innerWidth, window.innerHeight);
+      this.renderer.setSize(this.getParentWidth(), this.getParentHeight());
+      var oldWidth = this.getParentWidth();
+      var oldHeight = this.getParentHeight();
+      this.renderer.setSize(this.getParentWidth() - 5, this.getParentHeight() - 5);
 
       this.controls.handleResize();
 
       this.render();
+
+      // deal with the div size lagging behind the page size
+      if (oldWidth > this.getParentWidth() || oldHeight > this.getParentHeight()) {
+        this.onWindowResize();
+      }
+
 
     }
 
