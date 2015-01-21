@@ -1,25 +1,17 @@
-/// <reference path="../Scripts/typings/csg.d.ts" />
 /// <reference path="../Scripts/typings/ThreeBSP.d.ts" />
-/// <reference path="../SimpleViewer/CsgTools.ts" />
 /// <reference path="../IPrototype.ts" />
 var RectPocket = (function () {
     function RectPocket(origin, dimensions) {
         this.origin = origin;
         this.dimensions = dimensions;
-        this.tools = new CsgTools();
     }
     RectPocket.prototype.getPrototype = function () {
-        var ret = new CSG.cube(this.tools.csgCoords(this.origin, this.dimensions));
-        this.tools.setColour(ret, 1, 0, 1);
         var cube_geometry = new THREE.CubeGeometry(this.dimensions[0], this.dimensions[1], this.dimensions[2]);
         var cube_mesh = new THREE.Mesh(cube_geometry);
         cube_mesh.position.x = this.origin[0];
         cube_mesh.position.y = this.origin[1];
         cube_mesh.position.z = this.origin[2];
         return {
-            getCSG: function () {
-                return ret;
-            },
             getThree: function () {
                 return cube_mesh;
             }
@@ -32,14 +24,11 @@ var CirclePocket = (function () {
         this.origin = origin;
         this.radius = radius;
         this.height = height;
-        this.tools = new CsgTools();
     }
     CirclePocket.prototype.getPrototype = function () {
-        var ret = new CSG.cylinder({ radius: this.radius, start: this.origin, end: [this.origin[0], this.origin[1], this.origin[2] - this.height] });
-        this.tools.setColour(ret, 0, 1, 1);
-        return { getCSG: function () {
-            return ret;
-        }, getThree: function () {
+        /*var ret = new CSG.cylinder({ radius: this.radius, start: this.origin, end: [this.origin[0], this.origin[1], this.origin[2] - this.height] });
+        this.tools.setColour(ret, 0, 1, 1);*/
+        return { getThree: function () {
             return null;
         } };
     };
@@ -50,14 +39,8 @@ var WoodFlat = (function () {
         this.origin = origin;
         this.dimensions = dimensions;
         this.cuts = [];
-        this.tools = new CsgTools();
     }
     WoodFlat.prototype.getPrototype = function () {
-        var ret = new CSG.cube(this.tools.csgCoords(this.origin, this.dimensions));
-        this.tools.setColour(ret, 1, 1, 0);
-        this.cuts.forEach(function (cut) {
-            ret = ret.subtract(cut.getPrototype().getCSG());
-        });
         var cube_geometry = new THREE.CubeGeometry(this.dimensions[0], this.dimensions[1], this.dimensions[2]);
         var cube_mesh = new THREE.Mesh(cube_geometry);
         cube_mesh.position.x = this.origin[0];
@@ -72,9 +55,6 @@ var WoodFlat = (function () {
             color: 0xCCCCCC
         }));
         return {
-            getCSG: function () {
-                return ret;
-            },
             getThree: function () {
                 return three;
             }
