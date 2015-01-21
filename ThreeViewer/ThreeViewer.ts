@@ -48,16 +48,9 @@ module ThreeViewer {
 
       this.controls.addEventListener('change', this.render);
 
-      // world
-
       this.scene = new THREE.Scene();
-      //            this.scene.fog = new THREE.FogExp2(0xcccccc, 0.002);
-
-
-
 
       // lights
-
       var light = new THREE.PointLight(0xffffff, 1, 2000);
       light.position.set(200, 200, 500);
       this.scene.add(light);
@@ -65,20 +58,17 @@ module ThreeViewer {
       light = new THREE.PointLight(0xffffff, 0.5, 2000);
       light.position.set(100, 200, 0);
       this.scene.add(light);
-      // renderer
 
+      // renderer
       this.renderer = new THREE.WebGLRenderer({ antialias: false });
       this.renderer.setClearColor(0xffffff);
       this.renderer.setPixelRatio(window.devicePixelRatio);
-      this.renderer.setSize(this.getParentWidth(), this.getParentHeight());
-
+      this.resizeRenderer();
       this.container.append(this.renderer.domElement);
 
-      //
-
       window.addEventListener('resize', () => {
-        this.onWindowResize();
-        window.setTimeout(() => { this.onWindowResize(); }, 500);
+        this.resizeRenderer();
+        window.setTimeout(() => { this.resizeRenderer(); }, 500);
       }, false);
 
       //
@@ -87,13 +77,18 @@ module ThreeViewer {
 
 
     }
+    oldMesh;
 
     addScene(mesh) {
+      if (this.oldMesh)
+        this.scene.remove(this.oldMesh);
+
       this.scene.add(mesh);
+      this.oldMesh=mesh;
       this.render();
     }
 
-    onWindowResize = () => {
+    resizeRenderer = () => {
 
       this.camera.aspect = this.getParentWidth() / this.getParentHeight();
       this.camera.updateProjectionMatrix();
@@ -109,7 +104,7 @@ module ThreeViewer {
 
       // deal with the div size lagging behind the page size
       if (oldWidth > this.getParentWidth() || oldHeight > this.getParentHeight()) {
-        this.onWindowResize();
+        this.resizeRenderer();
       }
 
 

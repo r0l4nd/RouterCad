@@ -6,7 +6,7 @@ var ThreeViewer;
         function Viewer(container) {
             var _this = this;
             this.container = container;
-            this.onWindowResize = function () {
+            this.resizeRenderer = function () {
                 _this.camera.aspect = _this.getParentWidth() / _this.getParentHeight();
                 _this.camera.updateProjectionMatrix();
                 _this.renderer.setSize(_this.getParentWidth(), _this.getParentHeight());
@@ -17,7 +17,7 @@ var ThreeViewer;
                 _this.render();
                 // deal with the div size lagging behind the page size
                 if (oldWidth > _this.getParentWidth() || oldHeight > _this.getParentHeight()) {
-                    _this.onWindowResize();
+                    _this.resizeRenderer();
                 }
             };
             this.animate = function () {
@@ -51,9 +51,7 @@ var ThreeViewer;
             this.controls.dynamicDampingFactor = 0.3;
             this.controls.keys = [65, 83, 68];
             this.controls.addEventListener('change', this.render);
-            // world
             this.scene = new THREE.Scene();
-            //            this.scene.fog = new THREE.FogExp2(0xcccccc, 0.002);
             // lights
             var light = new THREE.PointLight(0xffffff, 1, 2000);
             light.position.set(200, 200, 500);
@@ -65,20 +63,22 @@ var ThreeViewer;
             this.renderer = new THREE.WebGLRenderer({ antialias: false });
             this.renderer.setClearColor(0xffffff);
             this.renderer.setPixelRatio(window.devicePixelRatio);
-            this.renderer.setSize(this.getParentWidth(), this.getParentHeight());
+            this.resizeRenderer();
             this.container.append(this.renderer.domElement);
-            //
             window.addEventListener('resize', function () {
-                _this.onWindowResize();
+                _this.resizeRenderer();
                 window.setTimeout(function () {
-                    _this.onWindowResize();
+                    _this.resizeRenderer();
                 }, 500);
             }, false);
             //
             this.render();
         };
         Viewer.prototype.addScene = function (mesh) {
+            if (this.oldMesh)
+                this.scene.remove(this.oldMesh);
             this.scene.add(mesh);
+            this.oldMesh = mesh;
             this.render();
         };
         return Viewer;
