@@ -1,4 +1,4 @@
-/// <reference path="components.ts" />
+// / <reference path="components.ts" />
 /// <reference path="DSL/baselib.ts" />
 /// <reference path="Scripts/typings/angularjs/angular.d.ts" />
 /// <reference path="IPrototype.ts" />
@@ -11,8 +11,6 @@ var RouterCadMain;
                 var material;
                 eval($scope.code);
                 // material may be updated in eval
-                // ReSharper disable once ConditionIsAlwaysConst
-                // ReSharper disable once HeuristicallyUnreachableCode
                 if (material)
                     $scope.prototype = material.getPrototype();
             };
@@ -23,3 +21,4 @@ var RouterCadMain;
     RouterCadMain.MainController = MainController;
     angular.module("routerCadMain", ['ngAnimate', 'ngMaterial', "components", "ui.ace"]).controller("mainController", ["$scope", MainController]);
 })(RouterCadMain || (RouterCadMain = {}));
+//# sourceMappingURL=RouterCadMain.js.map

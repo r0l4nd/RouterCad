@@ -1,4 +1,6 @@
 /// <reference path="ThreeViewer/ThreeViewer.ts" />
+/// <reference path="Scripts/typings/angularjs/angular.d.ts" />
+/// <reference path="IPrototype.ts" />
 var Components;
 (function (Components) {
     var TViewer = (function () {
@@ -13,7 +15,7 @@ var Components;
                     $scope.$watch("model", function (model) {
                         if (model)
                             viewer.addScene(model.getThree());
-                    }, true);
+                    }, false);
                 }
             };
         }
@@ -22,3 +24,4 @@ var Components;
     Components.TViewer = TViewer;
     angular.module("components", []).directive("tviewer", [TViewer]);
 })(Components || (Components = {}));
+//# sourceMappingURL=Components.js.map

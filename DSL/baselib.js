@@ -1,5 +1,6 @@
 /// <reference path="../Scripts/typings/ThreeBSP.d.ts" />
 /// <reference path="../IPrototype.ts" />
+/// <reference path="../Scripts/typings/threejs/three.d.ts" />
 var RectPocket = (function () {
     function RectPocket(origin, dimensions) {
         this.origin = origin;
@@ -14,7 +15,8 @@ var RectPocket = (function () {
         return {
             getThree: function () {
                 return cube_mesh;
-            }
+            },
+            mesh: cube_mesh
         };
     };
     return RectPocket;
@@ -27,10 +29,13 @@ var CirclePocket = (function () {
     }
     CirclePocket.prototype.getPrototype = function () {
         /*var ret = new CSG.cylinder({ radius: this.radius, start: this.origin, end: [this.origin[0], this.origin[1], this.origin[2] - this.height] });
-        this.tools.setColour(ret, 0, 1, 1);*/
-        return { getThree: function () {
-            return null;
-        } };
+         this.tools.setColour(ret, 0, 1, 1);*/
+        return {
+            getThree: function () {
+                return null;
+            },
+            mesh: 0
+        };
     };
     return CirclePocket;
 })();
@@ -57,7 +62,8 @@ var WoodFlat = (function () {
         return {
             getThree: function () {
                 return three;
-            }
+            },
+            mesh: cube_mesh
         };
     };
     WoodFlat.prototype.makeCut = function (shape) {
@@ -65,3 +71,4 @@ var WoodFlat = (function () {
     };
     return WoodFlat;
 })();
+//# sourceMappingURL=BaseLib.js.map

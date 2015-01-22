@@ -1,4 +1,4 @@
-﻿/// <reference path="components.ts" />
+﻿// / <reference path="components.ts" />
 /// <reference path="DSL/baselib.ts" />
 /// <reference path="Scripts/typings/angularjs/angular.d.ts" />
 /// <reference path="IPrototype.ts" />
@@ -8,7 +8,7 @@ module RouterCadMain {
         prop: String;
     }
 
-    export interface ITestControllerScope {
+    export interface ITestControllerScope extends ng.IScope {
         code: string;
         prototype: IPrototype;
         updatePrototype: Function;
@@ -22,8 +22,6 @@ module RouterCadMain {
                 var material: WoodFlat;
                 eval($scope.code);
                 // material may be updated in eval
-                // ReSharper disable once ConditionIsAlwaysConst
-                // ReSharper disable once HeuristicallyUnreachableCode
                 if (material) $scope.prototype = material.getPrototype();
             };
             $scope.updatePrototype();

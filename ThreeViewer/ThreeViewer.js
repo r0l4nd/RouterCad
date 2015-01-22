@@ -52,13 +52,7 @@ var ThreeViewer;
             this.controls.keys = [65, 83, 68];
             this.controls.addEventListener('change', this.render);
             this.scene = new THREE.Scene();
-            // lights
-            var light = new THREE.PointLight(0xffffff, 1, 2000);
-            light.position.set(200, 200, 500);
-            this.scene.add(light);
-            light = new THREE.PointLight(0xffffff, 0.5, 2000);
-            light.position.set(100, 200, 0);
-            this.scene.add(light);
+            this.addLights(this.scene);
             // renderer
             this.renderer = new THREE.WebGLRenderer({ antialias: false });
             this.renderer.setClearColor(0xffffff);
@@ -74,6 +68,14 @@ var ThreeViewer;
             //
             this.render();
         };
+        Viewer.prototype.addLights = function (scene) {
+            var light = new THREE.PointLight(0xffffff, 1, 2000);
+            light.position.set(200, 200, 500);
+            scene.add(light);
+            light = new THREE.PointLight(0xffffff, 0.5, 2000);
+            light.position.set(100, 200, 0);
+            scene.add(light);
+        };
         Viewer.prototype.addScene = function (mesh) {
             if (this.oldMesh)
                 this.scene.remove(this.oldMesh);
@@ -85,3 +87,4 @@ var ThreeViewer;
     })();
     ThreeViewer.Viewer = Viewer;
 })(ThreeViewer || (ThreeViewer = {}));
+//# sourceMappingURL=ThreeViewer.js.map

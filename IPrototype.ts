@@ -1,3 +1,4 @@
 interface IPrototype {
-  getThree(): THREE.Mesh;
+    getThree(): THREE.Mesh;
+    mesh;
 }
