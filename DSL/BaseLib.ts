@@ -7,7 +7,7 @@ interface IPocket {
 }
 
 class RectPocket implements IPocket {
-    constructor(private origin:any[], private dimensions:any[]) {
+    constructor(private origin:number[], private dimensions:number[]) {
     }
 
     getPrototype():IPrototype {
@@ -29,7 +29,7 @@ class RectPocket implements IPocket {
 }
 
 class CirclePocket implements IPocket {
-    constructor(private origin:any[], private radius, private height) {
+    constructor(private origin:number[], private radius: number, private height: number) {
     }
 
     getPrototype():IPrototype {

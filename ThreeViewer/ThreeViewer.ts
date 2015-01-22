@@ -4,12 +4,10 @@
 module ThreeViewer {
     export class Viewer {
 
-        camera;
-        controls;
-        scene;
-        renderer;
-
-        cross;
+        private camera;
+        private controls: THREE.TrackballControls;
+        private scene: THREE.Scene;
+        private renderer;
 
         constructor(private container) {
             this.init();
@@ -25,27 +23,14 @@ module ThreeViewer {
         }
 
 
-        init() {
+        private init() {
 
             this.camera = new THREE.PerspectiveCamera(70, this.getParentWidth() / this.getParentHeight(), 1, 10000);
             this.camera.position.y = -500;
             this.camera.position.z = 500;
 
             this.controls = new THREE.TrackballControls(this.camera);
-
-            this.controls.rotateSpeed = 1.0;
-            this.controls.zoomSpeed = 1.2;
-            this.controls.panSpeed = 0.8;
-
-            this.controls.noZoom = false;
-            this.controls.noPan = false;
-
-            this.controls.staticMoving = true;
-            this.controls.dynamicDampingFactor = 0.3;
-
-            this.controls.keys = [65, 83, 68];
-
-            this.controls.addEventListener('change', this.render);
+            this.setupControls(this.controls);
 
             this.scene = new THREE.Scene();
 
@@ -64,11 +49,19 @@ module ThreeViewer {
                 }, 500);
             }, false);
 
-            //
-
             this.render();
+        }
 
-
+        private setupControls(controls: THREE.TrackballControls) {
+            controls.rotateSpeed = 1.0;
+            controls.zoomSpeed = 1.2;
+            controls.panSpeed = 0.8;
+            controls.noZoom = false;
+            controls.noPan = false;
+            controls.staticMoving = true;
+            controls.dynamicDampingFactor = 0.3;
+            controls.keys = [65, 83, 68];
+            controls.addEventListener('change', this.render);
         }
 
         private  addLights(scene: THREE.Scene) {
@@ -81,9 +74,10 @@ module ThreeViewer {
             scene.add(light);
         }
 
-        oldMesh;
+        private oldMesh;
 
         addScene(mesh) {
+            // remove existing elements from the scene
             if (this.oldMesh)
                 this.scene.remove(this.oldMesh);
 
@@ -92,12 +86,13 @@ module ThreeViewer {
             this.render();
         }
 
-        resizeRenderer = () => {
-
+        private resizeRenderer() {
             this.camera.aspect = this.getParentWidth() / this.getParentHeight();
             this.camera.updateProjectionMatrix();
 
             this.renderer.setSize(this.getParentWidth(), this.getParentHeight());
+
+            // shrink viewer by 5px
             var oldWidth = this.getParentWidth();
             var oldHeight = this.getParentHeight();
             this.renderer.setSize(this.getParentWidth() - 5, this.getParentHeight() - 5);
@@ -107,19 +102,20 @@ module ThreeViewer {
             this.render();
 
             // deal with the div size lagging behind the page size
+            // if shrinking the viewer by 5px caused the parent to shrink, do another resize!
             if (oldWidth > this.getParentWidth() || oldHeight > this.getParentHeight()) {
                 this.resizeRenderer();
             }
-
-
         }
 
-        animate = () => {
+        //declare as lambda in order to allow recursion
+        private animate = () => {
             requestAnimationFrame(this.animate);
             this.controls.update();
         }
 
-        render = () => {
+        //declare as lambda to localise scope of 'this'
+        private render = () => {
             this.renderer.render(this.scene, this.camera);
         }
     }
