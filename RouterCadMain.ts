@@ -2,13 +2,16 @@
 /// <reference path="DSL/baselib.ts" />
 /// <reference path="typings/angularjs/angular.d.ts" />
 /// <reference path="IPrototype.ts" />
+/// <reference path="Processor.ts" />
+
 
 module RouterCadMain {
     export class MainController {
-      code: string;
-      prototype: IPrototype;
+        code:string;
+        prototype:IPrototype;
 
-        constructor() {
+        constructor(private processor:Processor.IProcessor) {
+
             this.code = "material = new WoodFlat([0, 0, 0], [200, 200, 25]);\r\nmaterial.makeCut(new RectPocket([0, 50, 0], [100, 100, 100] ));";
 
 
@@ -16,13 +19,13 @@ module RouterCadMain {
         }
 
         updatePrototype() {
-          var material: WoodFlat;
-          eval(this.code);
-          // material may be updated in eval
-          if (material) this.prototype = material.getPrototype();
+            this.prototype = this.processor.makePrototype(this.code);
         }
     }
 
-    angular.module("routerCadMain", ['ngAnimate', 'ngMaterial', "components", "ui.ace"])
-        .controller("mainController", [MainController]);
+    angular.module("routerCadMain", ["Processor", 'ngAnimate', 'ngMaterial', "components", "ui.ace"])
+        .controller("mainController", ['MaterialProcessor', MainController]);
+
 }
+
+
