@@ -2,81 +2,78 @@
 <html>
 
 <head>
-  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-  <title>RouterCAD - easy cutting</title>
-  <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/angular_material/0.6.1/angular-material.min.css">
-  <link href="main.css" rel="stylesheet" />
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <title>RouterCAD - easy cutting</title>
+    <link rel="stylesheet" type="text/css"
+          href="http://ajax.googleapis.com/ajax/libs/angular_material/0.6.1/angular-material.min.css">
+    <link href="main.css" rel="stylesheet"/>
 
-  <script src="http://code.jquery.com/jquery-2.1.3.js"></script>
-  <script src="http://cdn.jsdelivr.net/hammerjs/2.0.4/hammer.min.js"></script>
-  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.6/angular.min.js"></script>
-  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.6/angular-animate.min.js"></script>
-  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.6/angular-aria.min.js"></script>
-  <script src="http://ajax.googleapis.com/ajax/libs/angular_material/0.6.1/angular-material.min.js"></script>
-  <script src="http://cdn.jsdelivr.net/ace/1.1.8/min/ace.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r70/three.js"></script>
+    <script src="http://code.jquery.com/jquery-2.1.3.js"></script>
+    <script src="http://cdn.jsdelivr.net/hammerjs/2.0.4/hammer.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.6/angular.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.6/angular-animate.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.6/angular-aria.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angular_material/0.6.1/angular-material.min.js"></script>
+    <script src="http://cdn.jsdelivr.net/ace/1.1.8/min/ace.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r70/three.js"></script>
 
 
-  <script src="ui-ace/ui-ace.js"></script>
-  <script src="DSL/BaseLib.js"></script>
-  <script src="ThreeViewer/ThreeCSG.js"></script>
-  <script src="ThreeViewer/TrackballControls.js"></script>
-  <script src="ThreeViewer/ThreeViewer.js"></script>
-  <script src="Components.js"></script>
-  <script src="RouterCadMain.js"></script>
+    <script src="libs/ui-ace/ui-ace.js"></script>
+    <script src="DSL/BaseLib.js"></script>
+    <script src="libs/ThreeCSG.js"></script>
+    <script src="ThreeViewer/libs/TrackballControls.js"></script>
+    <script src="ThreeViewer/ThreeViewer.js"></script>
+    <script src="Components.js"></script>
+    <script src="RouterCadMain.js"></script>
 </head>
 
 <body ng-app="routerCadMain">
 
-  <div layout="column" ng-controller="mainController" layout-fill>
+<div layout="column" ng-controller="mainController" layout-fill>
     <md-toolbar id="navbar">
-      <div class="md-toolbar-tools">
-        <span>RouterCAD</span>
-        <md-button ng-click="updatePrototype()">Refresh</md-button>
-        <!-- fill up the space between left and right area -->
-        <span flex></span>
-        <md-button>Save</md-button>
-      </div>
+        <div class="md-toolbar-tools">
+            <span>RouterCAD</span>
+            <md-button ng-click="updatePrototype()">Refresh</md-button>
+            <!-- fill up the space between left and right area -->
+            <span flex></span>
+            <md-button>Save</md-button>
+        </div>
     </md-toolbar>
 
     <div id="mainContent" layout="row" flex>
-      <div class="container md-whiteframe-z1" id="codeContainer" flex="30">
-        <md-toolbar id="codeBar">
-          <div class="md-toolbar-tools">
-            <span>Untitled *</span>
-          </div>
-        </md-toolbar>
-        <div id="codeEditor" ui-ace="{
-
+        <div class="container md-whiteframe-z1" id="codeContainer" flex="30">
+            <md-toolbar id="codeBar">
+                <div class="md-toolbar-tools">
+                    <span>Untitled *</span>
+                </div>
+            </md-toolbar>
+            <div id="codeEditor" ui-ace="{
                             useWrapMode : true,
-
                             theme: 'chrome',
-
                             mode: 'javascript'
-
                          }" ng-model="code"></div>
-        <script type="text/javascript">
-          function resizeEditor() {
-            $("#codeEditor").height(0);
-            window.setTimeout(
-              function() {
-                $("#codeEditor").height($("#codeContainer").innerHeight()-70);
+            <script type="text/javascript">
+                function resizeEditor() {
+                    $("#codeEditor").height(0);
+                    window.setTimeout(
+                            function () {
+                                $("#codeEditor").height($("#codeContainer").innerHeight() - 70);
 
-              }
-              , 50);
-          }
+                            }
+                            , 50);
+                }
 
-          $(window).resize(resizeEditor);
-          resizeEditor();
-        </script>
-      </div>
-      <div class="container md-whiteframe-z1" id="previewContainer" flex>
+                $(window).resize(resizeEditor);
+                resizeEditor();
+            </script>
+        </div>
+        <div class="container md-whiteframe-z1" id="previewContainer" flex>
 
-        <tviewer model="prototype"></tviewer>
-      </div>
+            <tviewer model="prototype"></tviewer>
+        </div>
 
     </div>
-  </div>
+</div>
 
 </body>
 

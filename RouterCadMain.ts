@@ -1,6 +1,6 @@
-﻿// / <reference path="components.ts" />
+﻿/// <reference path="components.ts" />
 /// <reference path="DSL/baselib.ts" />
-/// <reference path="Scripts/typings/angularjs/angular.d.ts" />
+/// <reference path="typings/angularjs/angular.d.ts" />
 /// <reference path="IPrototype.ts" />
 
 module RouterCadMain {

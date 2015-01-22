@@ -1,5 +1,5 @@
 /// <reference path="ThreeViewer/ThreeViewer.ts" />
-/// <reference path="Scripts/typings/angularjs/angular.d.ts" />
+/// <reference path="typings/angularjs/angular.d.ts" />
 /// <reference path="IPrototype.ts" />
 
 module Components {

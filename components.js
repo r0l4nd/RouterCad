@@ -1,5 +1,5 @@
 /// <reference path="ThreeViewer/ThreeViewer.ts" />
-/// <reference path="Scripts/typings/angularjs/angular.d.ts" />
+/// <reference path="typings/angularjs/angular.d.ts" />
 /// <reference path="IPrototype.ts" />
 var Components;
 (function (Components) {
@@ -11,6 +11,7 @@ var Components;
                 link: function ($scope, element) {
                     // create viewer and attach to the parent element
                     var viewer = new ThreeViewer.Viewer(element);
+
                     // watch the model and update the viewer when it changes
                     $scope.$watch("model", function (model) {
                         if (model)
@@ -22,6 +23,6 @@ var Components;
         return TViewer;
     })();
     Components.TViewer = TViewer;
+
     angular.module("components", []).directive("tviewer", [TViewer]);
 })(Components || (Components = {}));
-//# sourceMappingURL=Components.js.map

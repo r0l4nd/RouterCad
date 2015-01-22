@@ -1,7 +1,6 @@
-
-/// <reference path="../Scripts/typings/ThreeBSP.d.ts" />
+/// <reference path="../typings/ThreeBSP.d.ts" />
 /// <reference path="../IPrototype.ts" />
-/// <reference path="../Scripts/typings/threejs/three.d.ts" />
+/// <reference path="../typings/threejs/three.d.ts" />
 
 interface IPocket {
     getPrototype(): IPrototype;

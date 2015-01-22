@@ -1,5 +1,5 @@
-/// <reference path="../Scripts/typings/threejs/three.d.ts" />
-/// <reference path="../Scripts/typings/TrackballControls.d.ts" />
+/// <reference path="../typings/threejs/three.d.ts" />
+/// <reference path="../typings/TrackballControls.d.ts" />
 
 module ThreeViewer {
     export class Viewer {
