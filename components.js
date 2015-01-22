@@ -24,4 +24,3 @@ var Components;
     Components.TViewer = TViewer;
     angular.module("components", []).directive("tviewer", [TViewer]);
 })(Components || (Components = {}));
-//# sourceMappingURL=Components.js.map

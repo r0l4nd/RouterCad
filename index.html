@@ -29,11 +29,11 @@
 
 <body ng-app="routerCadMain">
 
-<div layout="column" ng-controller="mainController" layout-fill>
+<div layout="column" ng-controller="mainController as prototype" layout-fill>
     <md-toolbar id="navbar">
         <div class="md-toolbar-tools">
             <span>RouterCAD</span>
-            <md-button ng-click="updatePrototype()">Refresh</md-button>
+            <md-button ng-click="prototype.updatePrototype()">Refresh</md-button>
             <!-- fill up the space between left and right area -->
             <span flex></span>
             <md-button>Save</md-button>
@@ -51,7 +51,7 @@
                             useWrapMode : true,
                             theme: 'chrome',
                             mode: 'javascript'
-                         }" ng-model="code"></div>
+                         }" ng-model="prototype.code"></div>
             <script type="text/javascript">
                 function resizeEditor() {
                     $("#codeEditor").height(0);
@@ -69,7 +69,7 @@
         </div>
         <div class="container md-whiteframe-z1" id="previewContainer" flex>
 
-            <tviewer model="prototype"></tviewer>
+            <tviewer model="prototype.prototype"></tviewer>
         </div>
 
     </div>
