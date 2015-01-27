@@ -1,6 +1,7 @@
 /// <reference path="ThreeViewer/ThreeViewer.ts" />
 /// <reference path="typings/angularjs/angular.d.ts" />
 /// <reference path="IPrototype.ts" />
+///<reference path="Utils.ts"/>
 var Components;
 (function (Components) {
     var TViewer = (function () {
@@ -9,13 +10,18 @@ var Components;
                 restrict: "E",
                 scope: { model: "=" },
                 link: function ($scope, element) {
+                    var model = $scope.model;
                     // create viewer and attach to the parent element
                     var viewer = new ThreeViewer.Viewer(element);
-                    // watch the model and update the viewer when it changes
-                    $scope.$watch("model", function (model) {
-                        if (model)
-                            viewer.addScene(model.getThree());
-                    }, false);
+                    var updatePrototype = function (prototype) {
+                        if (prototype)
+                            viewer.addScene(prototype.mesh);
+                    };
+                    model.addObserver(updatePrototype);
+                    updatePrototype(model.get());
+                    $scope.$on('$destroy', function () {
+                        model.removeObserver(updatePrototype);
+                    });
                 }
             };
         }
@@ -24,3 +30,4 @@ var Components;
     Components.TViewer = TViewer;
     angular.module("components", []).directive("tviewer", [TViewer]);
 })(Components || (Components = {}));
+//# sourceMappingURL=Components.js.map

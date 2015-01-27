@@ -1,6 +1,7 @@
 /// <reference path="ThreeViewer/ThreeViewer.ts" />
 /// <reference path="typings/angularjs/angular.d.ts" />
 /// <reference path="IPrototype.ts" />
+///<reference path="Utils.ts"/>
 
 module Components {
 
@@ -9,16 +10,26 @@ module Components {
             return {
                 restrict: "E",
                 scope: {model: "="},
-                link: ($scope:ng.IScope, element:Element) => {
+                link: ($scope, element:Element) => {
+                    var model:Utils.IObservable<IPrototype> = $scope.model;
+
                     // create viewer and attach to the parent element
                     var viewer = new ThreeViewer.Viewer(element);
 
-                    // watch the model and update the viewer when it changes
-                    $scope.$watch("model", (model: IPrototype) => {
-                        if (model) viewer.addScene(model.getThree());
-                    }, false);
+                    var updatePrototype = (prototype: IPrototype) => {
+                        if (prototype) viewer.addScene(prototype.mesh);
+                    }
 
+                    model.addObserver(updatePrototype);
+
+                    updatePrototype(model.get());
+
+                    $scope.$on('$destroy', () =>{
+                        model.removeObserver(updatePrototype);
+                    });
                 }
+
+
             };
         }
     }

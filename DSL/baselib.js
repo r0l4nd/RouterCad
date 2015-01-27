@@ -13,9 +13,6 @@ var RectPocket = (function () {
         cube_mesh.position.y = this.origin[1];
         cube_mesh.position.z = this.origin[2];
         return {
-            getThree: function () {
-                return cube_mesh;
-            },
             mesh: cube_mesh
         };
     };
@@ -31,9 +28,6 @@ var CirclePocket = (function () {
         /*var ret = new CSG.cylinder({ radius: this.radius, start: this.origin, end: [this.origin[0], this.origin[1], this.origin[2] - this.height] });
          this.tools.setColour(ret, 0, 1, 1);*/
         return {
-            getThree: function () {
-                return null;
-            },
             mesh: 0
         };
     };
@@ -53,17 +47,14 @@ var WoodFlat = (function () {
         cube_mesh.position.z = this.origin[2];
         var cube_bsp = new ThreeBSP(cube_mesh);
         this.cuts.forEach(function (cut) {
-            cube_bsp = cube_bsp.subtract(new ThreeBSP(cut.getPrototype().getThree()));
+            cube_bsp = cube_bsp.subtract(new ThreeBSP(cut.getPrototype().mesh));
         });
         ;
         var three = cube_bsp.toMesh(new THREE.MeshLambertMaterial({
             color: 0xCCCCCC
         }));
         return {
-            getThree: function () {
-                return three;
-            },
-            mesh: cube_mesh
+            mesh: three
         };
     };
     WoodFlat.prototype.makeCut = function (shape) {
@@ -71,3 +62,4 @@ var WoodFlat = (function () {
     };
     return WoodFlat;
 })();
+//# sourceMappingURL=baselib.js.map

@@ -20,3 +20,4 @@ var Processor;
     Processor.MaterialProcessor = MaterialProcessor;
     angular.module("Processor", []).service('MaterialProcessor', [MaterialProcessor]);
 })(Processor || (Processor = {}));
+//# sourceMappingURL=Processor.js.map

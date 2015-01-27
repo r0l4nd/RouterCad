@@ -19,9 +19,6 @@ class RectPocket implements IPocket {
         cube_mesh.position.z = this.origin[2];
 
         return {
-            getThree: function () {
-                return cube_mesh;
-            },
             mesh: cube_mesh
         };
     }
@@ -36,9 +33,6 @@ class CirclePocket implements IPocket {
         /*var ret = new CSG.cylinder({ radius: this.radius, start: this.origin, end: [this.origin[0], this.origin[1], this.origin[2] - this.height] });
          this.tools.setColour(ret, 0, 1, 1);*/
         return {
-            getThree: () => {
-                return null;
-            },
             mesh: 0
         };
     }
@@ -59,7 +53,7 @@ class WoodFlat {
         var cube_bsp = new ThreeBSP(cube_mesh);
 
         this.cuts.forEach(function (cut) {
-            cube_bsp = cube_bsp.subtract(new ThreeBSP(cut.getPrototype().getThree()));
+            cube_bsp = cube_bsp.subtract(new ThreeBSP(cut.getPrototype().mesh));
         });
         ;
 
@@ -67,10 +61,7 @@ class WoodFlat {
             color: 0xCCCCCC
         }));
         return {
-            getThree: function () {
-                return three;
-            },
-            mesh: cube_mesh
+            mesh: three
         };
     }
 
