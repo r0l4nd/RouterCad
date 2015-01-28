@@ -1,16 +1,25 @@
 /// <reference path="../typings/threejs/three.d.ts" />
 /// <reference path="../typings/TrackballControls.d.ts" />
 
-module ThreeViewer {
+module threeViewer {
+
+    /**
+     * Creates a 3D viewer using three.js
+     */
     export class Viewer {
 
         private camera;
-        private controls: THREE.TrackballControls;
-        private scene: THREE.Scene;
+        private controls:THREE.TrackballControls;
+        private scene:THREE.Scene;
         private renderer;
 
+        /**
+         * Returns a new Viewer and adds it inside the specified element
+         *
+         * @param container The Jquery element to add the viewer inside
+         */
         constructor(private container) {
-            this.init();
+            this.initRenderer();
             this.animate();
         }
 
@@ -23,7 +32,7 @@ module ThreeViewer {
         }
 
 
-        private init() {
+        private initRenderer() {
 
             this.camera = new THREE.PerspectiveCamera(70, this.getParentWidth() / this.getParentHeight(), 1, 10000);
             this.camera.position.y = -500;
@@ -52,7 +61,7 @@ module ThreeViewer {
             this.render();
         }
 
-        private setupControls(controls: THREE.TrackballControls) {
+        private setupControls(controls:THREE.TrackballControls) {
             controls.rotateSpeed = 1.0;
             controls.zoomSpeed = 1.2;
             controls.panSpeed = 0.8;
@@ -64,7 +73,7 @@ module ThreeViewer {
             controls.addEventListener('change', this.render);
         }
 
-        private  addLights(scene: THREE.Scene) {
+        private  addLights(scene:THREE.Scene) {
             var light = new THREE.PointLight(0xffffff, 1, 2000);
             light.position.set(200, 200, 500);
             scene.add(light);
@@ -76,6 +85,11 @@ module ThreeViewer {
 
         private oldMesh;
 
+        /**
+         * Remove the current mesh in the scene and replace it with the one specified
+         *
+         * @param mesh the new mesh to display
+         */
         addScene(mesh) {
             // remove existing elements from the scene
             if (this.oldMesh)

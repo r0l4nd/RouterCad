@@ -11,7 +11,7 @@ module Components {
                 scope: {model: "="},
                 link: ($scope:ng.IScope, element:Element) => {
                     // create viewer and attach to the parent element
-                    var viewer = new ThreeViewer.Viewer(element);
+                    var viewer = new threeViewer.Viewer(element);
 
                     // watch the model and update the viewer when it changes
                     $scope.$watch("model", (model: IPrototype) => {
